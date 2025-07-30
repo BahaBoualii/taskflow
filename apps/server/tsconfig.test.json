@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "verbatimModuleSyntax": false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "types": ["node", "jest"]
+  },
+  "include": [
+    "src/**/*",
+    "src/tests/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+} 
