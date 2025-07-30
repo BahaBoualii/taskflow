@@ -238,9 +238,34 @@ src/tests/
 
 ## Environment Variables
 
+The server uses the following environment variables:
+
+### Required Variables
 - `PORT`: Server port (default: 3000)
-- `CORS_ORIGIN`: CORS origin (default: "*")
 - `NODE_ENV`: Environment mode (development/production)
+
+### Optional Variables
+- `CORS_ORIGIN`: CORS origin (default: "*")
+- `API_VERSION`: API version (default: "1.0.0")
+- `API_NAME`: API name (default: "Task Management API")
+- `LOG_LEVEL`: Logging level (default: "info")
+
+### Environment Setup
+
+1. Copy the example environment file:
+   ```bash
+   cp env.example .env
+   ```
+
+2. Modify the `.env` file with your desired values:
+   ```bash
+   PORT=3000
+   NODE_ENV=development
+   CORS_ORIGIN=http://localhost:3001
+   API_VERSION=1.0.0
+   API_NAME="Task Management API"
+   LOG_LEVEL=info
+   ```
 
 ## Architecture
 
