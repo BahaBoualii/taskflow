@@ -16,16 +16,46 @@ This project was created with [Better-T-Stack](https://github.com/AmanVarshney01
 
 ## Getting Started
 
-First, install the dependencies:
+### Option 1: Docker (Recommended)
 
+**Prerequisites:**
+- [Docker](https://docs.docker.com/get-docker/) (version 20.10 or higher)
+- [Docker Compose](https://docs.docker.com/compose/install/) (version 2.0 or higher)
+
+**Quick Start:**
 ```bash
-npm install
+# Clone the repository
+git clone <repository-url>
+cd taskflow
+
+# Run with Docker Compose
+docker compose up -d
+
+# Access the application
+# Web App: http://localhost:3001
+# API Server: http://localhost:3000
 ```
 
-
-Then, run the development server:
-
+**Development Mode:**
 ```bash
+# Run with hot reloading
+docker compose -f docker-compose.dev.yml up -d
+```
+
+For detailed Docker instructions, see [DOCKER.md](./DOCKER.md).
+
+### Option 2: Local Development
+
+**Prerequisites:**
+- Node.js 18+
+- npm or yarn
+
+**Installation:**
+```bash
+# Install dependencies
+npm install
+
+# Run the development server
 npm run dev
 ```
 
