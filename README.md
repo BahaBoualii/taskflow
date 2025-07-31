@@ -123,3 +123,29 @@ apps/web/README.md
 - `npm run dev:web`: Start only the web application
 - `npm run dev:server`: Start only the server
 - `npm run check-types`: Check TypeScript types across all apps
+
+## CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration. The pipeline includes:
+
+### 🔄 **Continuous Integration (`ci.yml`)**
+Runs on every push and pull request to `main` and `develop` branches:
+- **Type Checking**: Validates TypeScript types across all applications
+- **Build Testing**: Ensures all applications build successfully
+- **Unit Testing**: Runs server tests with Jest
+- **Security Audit**: Checks for known vulnerabilities in dependencies
+- **Docker Build**: Tests that Docker images can be built successfully
+
+### 📋 **Pull Request Validation (`pr.yml`)**
+Provides enhanced validation for pull requests:
+- **Comprehensive Testing**: All CI checks plus additional validations
+- **Security Scanning**: Vulnerability assessment for PR changes
+- **Docker Validation**: Ensures Docker builds work with PR changes
+- **Automated Comments**: Posts validation results directly on PRs
+
+### 📊 **Pipeline Status**
+
+You can monitor the pipeline status:
+- **GitHub Actions Tab**: View all workflow runs and their results
+- **PR Comments**: Automated status updates on pull requests
+- **Branch Protection**: Configure branch protection rules to require CI checks to pass
