@@ -137,7 +137,6 @@ Runs on every push and pull request to `main` and `develop` branches:
 Provides enhanced validation for pull requests:
 - **Comprehensive Testing**: All CI checks plus additional validations
 - **Security Scanning**: Vulnerability assessment for PR changes
-- **Docker Validation**: Ensures Docker builds work with PR changes
 - **Automated Comments**: Posts validation results directly on PRs
 
 ### 📊 **Pipeline Status**
