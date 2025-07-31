@@ -27,8 +27,8 @@ services:
   # Frontend Web App
   web:
     build:
-      context: ./apps/web
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/web/Dockerfile
     container_name: taskflow-web
     ports:
       - "3001:80"
