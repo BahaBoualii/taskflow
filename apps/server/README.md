@@ -24,6 +24,20 @@ src/
 └── index.ts         # Main application entry point
 ```
 
+## Design Decisions
+
+🤔 Why Express?
+- I chose Express because it's lightweight, unopinionated, and familiar to most developers. It offers full control over routing and middleware, making it a great fit for a small, focused API like this task manager.
+
+🤔 Why Zod for validation?
+- Zod is a TypeScript-first schema validation library that enforces runtime validation without losing type safety. It provides an elegant way to validate request bodies and query params while keeping types in sync with the rest of the application.
+
+🤔 Error handling approach
+- A centralized error handler was implemented to catch common API errors like "task not found" or "invalid input." Simplicity was prioritized over abstraction to ensure clarity during evaluation.
+
+🤔 Project structure
+- The backend is organized by responsibility: routes, services, schemas, and types. This separation improves maintainability and allows for future scaling (e.g., feature-based modules or testing layers).
+
 ## API Endpoints
 
 ### GET /tasks
