@@ -66,8 +66,6 @@ docker compose logs -f
 docker compose up -d --build
 ```
 
-For detailed Docker instructions and advanced configurations, see [DOCKER.md](./DOCKER.md).
-
 ### 💻 Local Development
 
 **Note:** Docker Compose is the recommended method for running TaskFlow. Use local development only if you need to modify the code or have specific development requirements.
