@@ -1,5 +1,7 @@
 # TaskFlow
 
+TaskFlow is a simple fullstack task management application designed for internal team use. It allows you to create, view, delete, and update the status of tasks through a minimal, modern interface.
+
 This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines React, TanStack Router, Express, and more.
 
 ## Features
@@ -34,12 +36,29 @@ The API is running at [http://localhost:3000](http://localhost:3000).
 
 ## Project Structure
 
+TaskFlow is structured as a monorepo to keep both the backend and frontend codebases in sync within a single repository. This approach provides several benefits:
+
+✅ Simplified dependency management – everything lives under one package.json (or shared tooling when needed)
+
+✅ Easier development workflow – no need to switch repos for fullstack work
+
+✅ Consistent tooling – shared ESLint, Prettier, TypeScript configs, etc.
+
+✅ Better collaboration – clearer context when working on features that touch both API and UI
+
+✅ Unified CI/CD pipelines – easier to test and deploy both layers together
+
 ```
-tech-test/
+TaskFlow/
 ├── apps/
 │   ├── web/         # Frontend application (React + TanStack Router)
 │   └── server/      # Backend API (Express)
 ```
+📘 Note: For specific details about implementation, tools, architecture, and decisions in each app, refer to the README.md inside each subdirectory:
+
+apps/server/README.md
+
+apps/web/README.md
 
 ## Available Scripts
 
