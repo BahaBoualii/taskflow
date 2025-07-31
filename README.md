@@ -16,7 +16,9 @@ This project was created with [Better-T-Stack](https://github.com/AmanVarshney01
 
 ## Getting Started
 
-### Option 1: Docker (Recommended)
+### 🐳 Docker Compose (Recommended)
+
+The **recommended way** to run TaskFlow is using Docker Compose. This method ensures consistent environments across different machines and eliminates dependency conflicts.
 
 **Prerequisites:**
 - [Docker](https://docs.docker.com/get-docker/) (version 20.10 or higher)
@@ -28,7 +30,7 @@ This project was created with [Better-T-Stack](https://github.com/AmanVarshney01
 git clone <repository-url>
 cd taskflow
 
-# Run with Docker Compose
+# Start all services with Docker Compose
 docker compose up -d
 
 # Access the application
@@ -36,15 +38,39 @@ docker compose up -d
 # API Server: http://localhost:3000
 ```
 
-**Development Mode:**
+**Stopping the application:**
 ```bash
-# Run with hot reloading
-docker compose -f docker-compose.dev.yml up -d
+# Stop all services
+docker compose down
+
+# Stop and remove volumes (data will be lost)
+docker compose down -v
 ```
 
-For detailed Docker instructions, see [DOCKER.md](./DOCKER.md).
+**Viewing logs:**
+```bash
+# View all logs
+docker compose logs
 
-### Option 2: Local Development
+# View specific service logs
+docker compose logs web
+docker compose logs server
+
+# Follow logs in real-time
+docker compose logs -f
+```
+
+**Rebuilding after changes:**
+```bash
+# Rebuild and start services
+docker compose up -d --build
+```
+
+For detailed Docker instructions and advanced configurations, see [DOCKER.md](./DOCKER.md).
+
+### 💻 Local Development
+
+**Note:** Docker Compose is the recommended method for running TaskFlow. Use local development only if you need to modify the code or have specific development requirements.
 
 **Prerequisites:**
 - Node.js 18+
