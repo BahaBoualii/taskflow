@@ -1,6 +1,6 @@
-# Task Management Frontend
+# TaskFlow Frontend
 
-A modern, responsive task management application built with React, TypeScript, and modern web technologies.
+A modern, responsive task management application built with React and TypeScript.
 
 ## Features
 
@@ -53,6 +53,25 @@ src/
 │   └── task.ts            # Task-related types
 └── routes/                # Application routes
 ```
+## Design Decisions
+
+🤔 Why Vite?
+- Vite provides a fast dev server and builds using modern tooling (ESBuild and Rollup). It offers instant HMR and minimal config, which speeds up frontend development without sacrificing build performance.
+
+🤔 Why ShadCN UI?
+- ShadCN UI was selected for its accessible, headless components built on top of Radix UI and Tailwind CSS. It allows for quick prototyping with a polished, minimal design, while remaining highly customizable if the app evolves.
+
+🤔 Why React Query?
+- React Query manages all task data fetching, caching, and synchronization with the server. It eliminates the need for manual state management around loading, errors, and optimistic updates — perfect for a task-based interface.
+
+🤔 Why Zustand?
+- Zustand provides simple and performant global state management for things like UI state (e.g., notifications or modal toggles). It was chosen over Redux to keep the bundle small and the codebase lean.
+
+🤔 Why React Hook Form + Zod?
+- React Hook Form handles forms efficiently with minimal re-renders and integrates smoothly with controlled components. Using Zod for schema validation ensures form data types are consistent with both frontend and backend logic.
+
+🤔 Component structure
+- The UI is built using reusable and composable components such as TaskForm, TaskList, TaskItem, and StatusToggle, making it easy to scale and maintain. API logic is encapsulated in custom hooks to isolate data-fetching concerns from presentation.
 
 ## Getting Started
 
@@ -193,14 +212,6 @@ Comprehensive error handling throughout the application:
 - User-friendly error messages
 - Toast notifications for feedback
 
-## Responsive Design
-
-The application is fully responsive:
-- Mobile-first design
-- Grid layouts that adapt to screen size
-- Touch-friendly interactions
-- Accessible keyboard navigation
-
 ## Development
 
 ### Available Scripts
@@ -211,21 +222,3 @@ npm run build        # Build for production
 npm run serve        # Preview production build
 npm run check-types  # TypeScript type checking
 ```
-
-### Code Quality
-
-- TypeScript for type safety
-- ESLint for code linting
-- Prettier for code formatting
-- Consistent component structure
-
-## Future Enhancements
-
-- Task categories and tags
-- Due dates and reminders
-- Task search and filtering
-- Drag and drop reordering
-- Bulk operations
-- Offline support
-- User authentication
-- Task sharing and collaboration 
