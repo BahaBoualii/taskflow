@@ -134,7 +134,6 @@ Runs on every push and pull request to `main` and `develop` branches:
 - **Build Testing**: Ensures all applications build successfully
 - **Unit Testing**: Runs server tests with Jest
 - **Security Audit**: Checks for known vulnerabilities in dependencies
-- **Docker Build**: Tests that Docker images can be built successfully
 
 ### 📋 **Pull Request Validation (`pr.yml`)**
 Provides enhanced validation for pull requests:
