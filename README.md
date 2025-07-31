@@ -18,7 +18,7 @@ This project was created with [Better-T-Stack](https://github.com/AmanVarshney01
 
 ### 🐳 Docker Compose (Recommended)
 
-The **recommended way** to run TaskFlow is using Docker Compose. This method ensures consistent environments across different machines and eliminates dependency conflicts.
+The **recommended way** to run TaskFlow is using Docker Compose. This method ensures consistent environments across different machines and eliminates dependency conflicts. Or you can just run the start.sh script that I prepared based on the docker-compose file to create the .env file and spin up the app automatically.
 
 **Prerequisites:**
 - [Docker](https://docs.docker.com/get-docker/) (version 20.10 or higher)
