@@ -1,0 +1,126 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  # Validate PR
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run check-types
+
+      - name: Build applications
+        run: npm run build
+
+      - name: Run server tests
+        run: npm run test --workspace=server
+
+  # Check for security vulnerabilities
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run security audit
+        run: npm audit --audit-level=moderate
+
+  # Test Docker builds
+  docker-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Test web Docker build
+        run: docker build -f apps/web/Dockerfile -t taskflow-web:pr-test .
+
+      - name: Test server Docker build
+        run: docker build -f apps/server/Dockerfile -t taskflow-server:pr-test .
+
+  # Comment on PR with results
+  comment:
+    runs-on: ubuntu-latest
+    needs: [validate, security, docker-test]
+    if: always()
+    steps:
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('## 🚀 PR Validation Results')
+            );
+            
+            const results = {
+              validate: '${{ needs.validate.result }}',
+              security: '${{ needs.security.result }}',
+              docker: '${{ needs.docker-test.result }}'
+            };
+            
+            const status = Object.values(results).every(r => r === 'success') ? '✅' : '❌';
+            const body = `## 🚀 PR Validation Results
+            
+            | Check | Status |
+            |------|--------|
+            | Type Check & Build | ${results.validate === 'success' ? '✅' : '❌'} |
+            | Security Audit | ${results.security === 'success' ? '✅' : '❌'} |
+            | Docker Build | ${results.docker === 'success' ? '✅' : '❌'} |
+            
+            **Overall Status:** ${status}
+            
+            ${status === '✅' ? '🎉 All checks passed! This PR is ready for review.' : '⚠️ Some checks failed. Please review the logs above.'}
+            `;
+            
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                comment_id: botComment.id,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body
+              });
+            } 

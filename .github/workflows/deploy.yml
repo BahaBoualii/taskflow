@@ -1,0 +1,95 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  # Build and test before deployment
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run check-types
+
+      - name: Build applications
+        run: npm run build
+
+      - name: Run server tests
+        run: npm run test --workspace=server
+
+      - name: Security audit
+        run: npm audit --audit-level=moderate
+
+  # Build Docker images for deployment
+  build-docker:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and tag web image
+        run: |
+          docker build -f apps/web/Dockerfile -t taskflow-web:${{ github.sha }} .
+          docker build -f apps/web/Dockerfile -t taskflow-web:latest .
+
+      - name: Build and tag server image
+        run: |
+          docker build -f apps/server/Dockerfile -t taskflow-server:${{ github.sha }} .
+          docker build -f apps/server/Dockerfile -t taskflow-server:latest .
+
+      # Optional: Push to container registry
+      # - name: Login to Container Registry
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Push Docker images
+      #   run: |
+      #     docker push taskflow-web:${{ github.sha }}
+      #     docker push taskflow-web:latest
+      #     docker push taskflow-server:${{ github.sha }}
+      #     docker push taskflow-server:latest
+
+  # Deploy to staging/production (placeholder)
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-docker
+    environment: production
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy placeholder
+        run: |
+          echo "🚀 Deployment would happen here!"
+          echo "📦 Built images:"
+          echo "  - taskflow-web:${{ github.sha }}"
+          echo "  - taskflow-server:${{ github.sha }}"
+          echo ""
+          echo "🔧 Configure your deployment strategy:"
+          echo "  - Kubernetes deployment"
+          echo "  - Docker Compose on server"
+          echo "  - Cloud platform (AWS, GCP, Azure)"
+          echo "  - Platform-as-a-Service (Heroku, Vercel, etc.)" 
